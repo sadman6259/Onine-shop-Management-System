@@ -1,0 +1,73 @@
+﻿@model IEnumerable<EcommersShop.Models.Category>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Find Product More Easily !!</h2>
+
+@using (Html.BeginForm("Index","Category",FormMethod.Get))
+{
+    <p>
+        Category Name: @Html.TextBox("searchString",null, new { @class = "form-control" }) 
+        <br />
+        <input type="submit" value="Search" class="btn btn-default" />
+    </p>
+}
+
+ 
+
+<table class="table">
+    
+
+@foreach (var item in Model) {
+    
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CategoryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductCode)
+        </th>
+     
+        <th></th>
+    </tr>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CategoryName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductCode)
+        </td>
+        
+        <td>
+            @Html.ActionLink("Product Details", "Details", new { id = item.CatId }, new { @class = "btn btn-primary btn-large" }) 
+        </td>
+     <td>   @Html.ActionLink("Add To Cart", "OrderNow2", "Cart", new { id = item.CatId }, new { @class = "btn btn-primary btn-large" })
+        </td>
+
+    </tr>
+}
+
+</table>

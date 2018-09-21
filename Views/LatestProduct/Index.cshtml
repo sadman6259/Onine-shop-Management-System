@@ -1,0 +1,60 @@
+﻿@model IEnumerable<EcommersShop.Models.LatestProduct>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Latest Products</h2>
+
+
+<table class="table">
+  
+
+@foreach (var item in Model) {
+    
+      <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductCode)
+        </th>
+        <th>
+            @Html.ActionLink("Added Date", "Index", new { sortOrder = ViewBag.DateSortParm })
+        </th>
+        <th></th>
+    </tr>
+    
+    
+    
+    
+    
+    
+    
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AddedDate)
+        </td>
+       
+        <td>
+            @Html.ActionLink("Product Details", "Details", new { id = item.Id }, new { @class = "btn btn-primary btn-large" }) 
+        </td>
+        <td>
+            @Html.ActionLink("Add To Cart", "OrderNow1", "Cart", new { id = item.Id },new { @class = "btn btn-primary btn-large" })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,63 @@
+﻿@model IEnumerable<EcommersShop.Models.DetailsProduct>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.AvailableQuantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AddedDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductReview)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Category.CategoryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LatestProduct.ProductName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TopProduct.ProductName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.AvailableQuantity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AddedDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductReview)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category.CategoryName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LatestProduct.ProductName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TopProduct.ProductName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.DetailsID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.DetailsID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.DetailsID })
+        </td>
+    </tr>
+}
+
+</table>

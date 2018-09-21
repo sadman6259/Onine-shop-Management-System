@@ -1,0 +1,114 @@
+﻿@model EcommersShop.Models.Order
+@using EcommersShop.Models
+@using EcommersShop.Controllers
+@{
+    ViewBag.Title = "Order";
+}
+
+<!DOCTYPE html>
+
+<h2>Order</h2>
+
+
+
+@using (Html.BeginForm("Order", "Home", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Order</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+
+        @{
+    decimal s = 0;
+        }
+       @{
+    var b = "";
+       }
+        @{
+    decimal c = 0;
+        }
+
+        @foreach (Item item in (List<Item>)Session["cart"])
+        {
+            s += item.Pr1.Price * item.Quantity1;
+            s += item.Lr1.Price * item.Quantity1;
+            s += item.Cr1.Price * item.Quantity1;
+
+
+            b += @item.Pr1.ProductName + @item.Quantity1;
+            b += @item.Lr1.ProductName + @item.Quantity1;
+            b += @item.Cr1.ProductName + @item.Quantity1;
+
+
+            c += @item.Quantity1;
+            
+          //  b = string.Concat(@item.Lr1.ProductName, @item.Pr1.ProductName, @item.Cr1.ProductName);
+          //  b = (item.Pr1.ProductName + " " + item.Lr1.ProductName + ""+item.Cr1.ProductName);
+            
+        }
+      
+
+      <div class="form-group">
+            @Html.LabelFor(model => model.ProductName, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+
+                @Html.TextBoxFor(model => model.ProductName, new { id = "txtPlace", Value = @b, @readonly = "readonly", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ProductName)
+
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CustomerName, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.CustomerName, new { id = "txtPlace1", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CustomerName)
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ContactNo, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.ContactNo, new { id = "txtPlace2", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ContactNo)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CustomerAddress, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.CustomerAddress, new { id = "txtPlace4", @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CustomerAddress)
+            </div>
+        </div>
+        <br />
+
+        <p>Total quantity: @c </p>
+     
+        <div class="form-group">
+
+            @Html.LabelFor(model => model.TotalPrice, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+
+                @Html.TextBoxFor(model => model.TotalPrice, new { id = "txtPlace", Value = @s, @readonly = "readonly", @class = "form-control" })
+
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Order" class="btn btn-default" />
+            </div>
+        </div>
+        <!-- The Modal -->
+      
+                </div>
+           
+
+
+
+}
+

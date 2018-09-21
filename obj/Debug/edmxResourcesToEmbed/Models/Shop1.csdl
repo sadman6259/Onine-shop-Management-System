@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ShopDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="CatId" />
+    </Key>
+    <Property Name="CatId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ProductName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Price" Type="Int32" Nullable="false" />
+    <Property Name="ProductCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="AddedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="DetailsProducts" Relationship="Self.FK_DetailsProduct_Category" FromRole="Category" ToRole="DetailsProduct" />
+  </EntityType>
+  <EntityType Name="DetailsProduct">
+    <Key>
+      <PropertyRef Name="DetailsID" />
+    </Key>
+    <Property Name="DetailsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AvailableQuantity" Type="Int32" Nullable="false" />
+    <Property Name="AddedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ProductReview" Type="Int32" Nullable="false" />
+    <Property Name="ProductID" Type="Int32" Nullable="false" />
+    <Property Name="CategoryID" Type="Int32" Nullable="false" />
+    <Property Name="LatestID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Category" Relationship="Self.FK_DetailsProduct_Category" FromRole="DetailsProduct" ToRole="Category" />
+    <NavigationProperty Name="LatestProduct" Relationship="Self.FK_DetailsProduct_LatestProduct" FromRole="DetailsProduct" ToRole="LatestProduct" />
+    <NavigationProperty Name="TopProduct" Relationship="Self.FK_DetailsProduct_TopProducts" FromRole="DetailsProduct" ToRole="TopProducts" />
+  </EntityType>
+  <EntityType Name="LatestProduct">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Price" Type="Int32" Nullable="false" />
+    <Property Name="ProductCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="AddedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="DetailsProducts" Relationship="Self.FK_DetailsProduct_LatestProduct" FromRole="LatestProduct" ToRole="DetailsProduct" />
+  </EntityType>
+  <EntityType Name="TopProduct">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Price" Type="Int32" Nullable="false" />
+    <Property Name="ProductCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="AddedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="DetailsProducts" Relationship="Self.FK_DetailsProduct_TopProducts" FromRole="TopProducts" ToRole="DetailsProduct" />
+  </EntityType>
+  <Association Name="FK_DetailsProduct_Category">
+    <End Role="Category" Type="Self.Category" Multiplicity="1" />
+    <End Role="DetailsProduct" Type="Self.DetailsProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="CatId" />
+      </Principal>
+      <Dependent Role="DetailsProduct">
+        <PropertyRef Name="CategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DetailsProduct_LatestProduct">
+    <End Role="LatestProduct" Type="Self.LatestProduct" Multiplicity="1" />
+    <End Role="DetailsProduct" Type="Self.DetailsProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LatestProduct">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DetailsProduct">
+        <PropertyRef Name="LatestID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DetailsProduct_TopProducts">
+    <End Role="TopProducts" Type="Self.TopProduct" Multiplicity="1" />
+    <End Role="DetailsProduct" Type="Self.DetailsProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TopProducts">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DetailsProduct">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ShopDbEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Categories" EntityType="Self.Category" />
+    <EntitySet Name="DetailsProducts" EntityType="Self.DetailsProduct" />
+    <EntitySet Name="LatestProducts" EntityType="Self.LatestProduct" />
+    <EntitySet Name="TopProducts" EntityType="Self.TopProduct" />
+    <AssociationSet Name="FK_DetailsProduct_Category" Association="Self.FK_DetailsProduct_Category">
+      <End Role="Category" EntitySet="Categories" />
+      <End Role="DetailsProduct" EntitySet="DetailsProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DetailsProduct_LatestProduct" Association="Self.FK_DetailsProduct_LatestProduct">
+      <End Role="LatestProduct" EntitySet="LatestProducts" />
+      <End Role="DetailsProduct" EntitySet="DetailsProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DetailsProduct_TopProducts" Association="Self.FK_DetailsProduct_TopProducts">
+      <End Role="TopProducts" EntitySet="TopProducts" />
+      <End Role="DetailsProduct" EntitySet="DetailsProducts" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,178 @@
+﻿@using EcommersShop.Controllers
+@using EcommersShop.Models
+@{
+    ViewBag.Title = "Cart";
+}
+
+<h2>Cart</h2>
+<div>
+    <br />
+    <h3>Top Products</h3>
+    <br />
+   
+    <table>
+
+        <tr id="d2" style="margin-left:500px">
+
+
+            <th>Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>total</th>
+
+
+        </tr>
+        @{
+            decimal s = 0;
+        }
+        @foreach (Item item in (List<Item>)Session["cart"])
+        {
+            s += item.Pr1.Price * item.Quantity1;
+
+            <tr id="d1" style=" margin-left:500px">
+
+
+
+                <td>@item.Pr1.ProductName</td>
+
+                <td>@item.Pr1.Price </td>
+                <td>@item.Quantity1</td>
+
+                <td>@(item.Pr1.Price * item.Quantity1)</td>
+
+
+                <td>
+                    @Html.ActionLink("Delete", "Delete", "Cart", new { id = item.Pr1.Id }, new { @class = "btn btn-primary btn-large" })
+
+
+
+
+                </td>
+            </tr>
+
+
+
+
+
+
+        }
+
+        </table>
+    <br />
+   <h3>Latest Products</h3>
+    <br />
+    <table>
+        <tr>
+
+            <th>Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>total</th>
+        </tr>
+
+        @foreach (Item item in (List<Item>)Session["cart"])
+        {
+            s += item.Lr1.Price * item.Quantity1;
+
+            <tr>
+
+
+
+                <td>@item.Lr1.ProductName </td>
+
+                <td>@item.Lr1.Price  </td>
+                <td>@item.Quantity1</td>
+
+                <td>@(item.Lr1.Price * item.Quantity1)</td>
+
+
+                <td>
+                    @Html.ActionLink("Delete", "Delete", "Cart", new { id = item.Lr1.Id },new { @class = "btn btn-primary btn-large" })
+
+
+
+
+                </td>
+            </tr>
+
+
+
+
+
+        }
+        </table>
+    <br />
+    <h3>Products By Category</h3>
+    <br />
+    
+    <table>
+        <tr>
+
+            <th>Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>total</th>
+        </tr>
+
+        @foreach (Item item in (List<Item>)Session["cart"])
+        {
+            s += item.Cr1.Price * item.Quantity1;
+
+            <tr>
+
+
+
+                <td>@item.Cr1.ProductName </td>
+
+                <td>@item.Cr1.Price  </td>
+                <td>@item.Quantity1</td>
+
+                <td>@(item.Cr1.Price * item.Quantity1)</td>
+
+
+                <td>
+                    @Html.ActionLink("Delete", "Delete", "Cart", new { id = item.Cr1.CatId }, new { @class = "btn btn-primary btn-large" })
+
+
+
+
+                </td>
+            </tr>
+
+
+
+
+
+
+
+        }
+
+
+    </table>
+</div>
+
+<br />
+<tr>
+    <td>
+        Sum
+    </td>
+    <td>
+        @s
+    </td>
+</tr>
+
+
+
+
+
+<br />
+<br />
+<br />
+
+
+
+
+
+
+
+
