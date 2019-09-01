@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ShopDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2005" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="CatId" />
+    </Key>
+    <Property Name="CatId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CategoryName" Type="varchar" MaxLength="50" />
+    <Property Name="ProductName" Type="varchar" MaxLength="50" />
+    <Property Name="Price" Type="int" Nullable="false" />
+    <Property Name="ProductCode" Type="varchar" MaxLength="50" />
+    <Property Name="AddedDate" Type="datetime" Nullable="false" />
+    <Property Name="AvailableQuantity" Type="int" />
+    <Property Name="ProductReview" Type="float" />
+  </EntityType>
+  <EntityType Name="DetailsProduct">
+    <Key>
+      <PropertyRef Name="DetailsID" />
+    </Key>
+    <Property Name="DetailsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AvailableQuantity" Type="int" Nullable="false" />
+    <Property Name="AddedDate" Type="datetime" Nullable="false" />
+    <Property Name="ProductReview" Type="int" Nullable="false" />
+    <Property Name="ProductID" Type="int" Nullable="false" />
+    <Property Name="CategoryID" Type="int" Nullable="false" />
+    <Property Name="LatestID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LatestProduct">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductName" Type="varchar" MaxLength="50" />
+    <Property Name="Price" Type="int" Nullable="false" />
+    <Property Name="ProductCode" Type="varchar" MaxLength="50" />
+    <Property Name="AddedDate" Type="datetime" Nullable="false" />
+    <Property Name="AvailableQuantity" Type="int" />
+    <Property Name="ProductReview" Type="float" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CustomerName" Type="varchar" MaxLength="50" />
+    <Property Name="ProductName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="TotalPrice" Type="int" Nullable="false" />
+    <Property Name="CustomerAddress" Type="varchar" MaxLength="50" />
+    <Property Name="ContactNo" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="TopProducts">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductName" Type="varchar" MaxLength="50" />
+    <Property Name="Price" Type="int" Nullable="false" />
+    <Property Name="ProductCode" Type="varchar" MaxLength="50" />
+    <Property Name="AddedDate" Type="datetime" Nullable="false" />
+    <Property Name="AvailableQuantity" Type="int" />
+    <Property Name="ProductReview" Type="int" />
+  </EntityType>
+  <Association Name="FK_DetailsProduct_Category">
+    <End Role="Category" Type="Self.Category" Multiplicity="1" />
+    <End Role="DetailsProduct" Type="Self.DetailsProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="CatId" />
+      </Principal>
+      <Dependent Role="DetailsProduct">
+        <PropertyRef Name="CategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DetailsProduct_LatestProduct">
+    <End Role="LatestProduct" Type="Self.LatestProduct" Multiplicity="1" />
+    <End Role="DetailsProduct" Type="Self.DetailsProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LatestProduct">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DetailsProduct">
+        <PropertyRef Name="LatestID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DetailsProduct_TopProducts">
+    <End Role="TopProducts" Type="Self.TopProducts" Multiplicity="1" />
+    <End Role="DetailsProduct" Type="Self.DetailsProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TopProducts">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DetailsProduct">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ShopDbModelStoreContainer">
+    <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DetailsProduct" EntityType="Self.DetailsProduct" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LatestProduct" EntityType="Self.LatestProduct" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TopProducts" EntityType="Self.TopProducts" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_DetailsProduct_Category" Association="Self.FK_DetailsProduct_Category">
+      <End Role="Category" EntitySet="Category" />
+      <End Role="DetailsProduct" EntitySet="DetailsProduct" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DetailsProduct_LatestProduct" Association="Self.FK_DetailsProduct_LatestProduct">
+      <End Role="LatestProduct" EntitySet="LatestProduct" />
+      <End Role="DetailsProduct" EntitySet="DetailsProduct" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DetailsProduct_TopProducts" Association="Self.FK_DetailsProduct_TopProducts">
+      <End Role="TopProducts" EntitySet="TopProducts" />
+      <End Role="DetailsProduct" EntitySet="DetailsProduct" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
